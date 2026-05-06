@@ -13,6 +13,6 @@ wifi:
 # Packages
 packages:
   setup:
-    url: https://github.com/jtenniswood/esphome-lvgl/
+    url: https://github.com/taylorramseyer/esphome-lvgl/
     file: guition-esp32-p4-jc8012p4a1/package.yaml
     refresh: 1sec
