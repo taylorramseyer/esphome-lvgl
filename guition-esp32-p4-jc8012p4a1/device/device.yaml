@@ -88,7 +88,7 @@ touchscreen:
     reset_pin: GPIO22
     interrupt_pin: GPIO21
     transform:
-      swap_xy: false
+      swap_xy: true
       mirror_x: false
       mirror_y: true
     on_release:
@@ -110,5 +110,5 @@ display:
     auto_clear_enabled: false
     color_order: RGB
     dimensions:
-      width: 1280
-      height: 800
+      width: 800
+      height: 1280
