@@ -7,7 +7,7 @@ lvgl:
 
   top_layer:
     widgets:
-    
+
       # Temperature
       - label:
           text: "-° / -°"
@@ -29,9 +29,87 @@ lvgl:
           text_align: center
           text_color: 0xFFFFFF
 
+      # ── Nav Bar ────────────────────────────────────────────────────────────
+      # After 90° rotation the logical screen is 1280×800.
+      # Three equal buttons: 420px wide, 44px tall, 5px margins/gaps.
+      #   Button 1 left edge:  5
+      #   Button 2 left edge:  5 + 420 + 5 = 430
+      #   Button 3 left edge:  430 + 420 + 5 = 855
+      # align: bottom_left with y: -49 parks the 44px button 5px above the edge.
+      # The checked (active) colour comes from the global button theme (0x00D4AA).
+      # ───────────────────────────────────────────────────────────────────────
+
+      - button:
+          id: nav_btn_1
+          align: bottom_left
+          x: 5
+          y: -49
+          width: 420
+          height: 44
+          radius: 8
+          checkable: true
+          shadow_width: 0
+          widgets:
+            - label:
+                text: "Office"
+                align: center
+                text_font: clockbar_font
+          on_click:
+            - lvgl.page.show: main_page
+
+      - button:
+          id: nav_btn_2
+          align: bottom_left
+          x: 430
+          y: -49
+          width: 420
+          height: 44
+          radius: 8
+          checkable: true
+          shadow_width: 0
+          widgets:
+            - label:
+                text: "Climate"
+                align: center
+                text_font: clockbar_font
+          on_click:
+            - lvgl.page.show: page_climate
+
+      - button:
+          id: nav_btn_3
+          align: bottom_left
+          x: 855
+          y: -49
+          width: 420
+          height: 44
+          radius: 8
+          checkable: true
+          shadow_width: 0
+          widgets:
+            - label:
+                text: "System"
+                align: center
+                text_font: clockbar_font
+          on_click:
+            - lvgl.page.show: page_system
+
   pages:
     - id: main_page
-      layout: 
+      # Mark tab 1 active whenever this page is loaded (including at boot).
+      on_load:
+        - lvgl.widget.update:
+            id: nav_btn_1
+            state:
+              checked: true
+        - lvgl.widget.update:
+            id: nav_btn_2
+            state:
+              checked: false
+        - lvgl.widget.update:
+            id: nav_btn_3
+            state:
+              checked: false
+      layout:
         type: flex
         flex_flow: column_wrap
         pad_row: 10
@@ -40,14 +118,14 @@ lvgl:
       bg_color: Black
       bg_opa: cover
       pad_top: 42
-      pad_bottom: 5
+      pad_bottom: 58     # ← was 5; increased to clear the 44px nav bar + margins
       pad_left: 5
       pad_right: 5
-      
+
       widgets:
-      
+
         # Office Features Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -57,20 +135,20 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: scene_features_icon                
+                  id: scene_features_icon
                   text: $ledstrip
               - label:
                   align: bottom_left
                   id: scene_features_label
                   text: "Features"
-            on_press:
+            on_click:
               - homeassistant.service:
                   service: switch.toggle
                   data:
                     entity_id: switch.office_features_stateful_scene
 
         # Office Calls Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -80,20 +158,20 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_scene_calls_icon                
+                  id: office_scene_calls_icon
                   text: $videocall
               - label:
                   align: bottom_left
                   id: office_scene_calls_label
                   text: "Calls"
-            on_press:
+            on_click:
               - homeassistant.service:
                   service: switch.toggle
                   data:
                     entity_id: switch.office_calls_stateful_scene
 
         # Office Evening Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -103,20 +181,20 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_scene_evening_icon                
+                  id: office_scene_evening_icon
                   text: $nightlight
               - label:
                   align: bottom_left
                   id: office_scene_evening_label
                   text: "Evening"
-            on_press:
+            on_click:
               - homeassistant.service:
                   service: switch.toggle
                   data:
                     entity_id: switch.office_evening_stateful_scene
 
         # Office Dimmed Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -126,20 +204,20 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_scene_dimmed_icon                
+                  id: office_scene_dimmed_icon
                   text: $nightlight
               - label:
                   align: bottom_left
                   id: office_scene_dimmed_label
                   text: "Dimmed"
-            on_press:
+            on_click:
               - homeassistant.service:
                   service: switch.toggle
                   data:
                     entity_id: switch.office_dimmed_stateful_scene
 
         # Office Blind 100%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -161,7 +239,7 @@ lvgl:
                     position: "100"
 
         # Office Blind 66%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -183,7 +261,7 @@ lvgl:
                     position: "66"
 
         # Office Blind 33%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -205,7 +283,7 @@ lvgl:
                     position: "33"
 
         # Office Blind 0%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -227,7 +305,7 @@ lvgl:
                     position: "0"
 
         # Storage Lights
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -250,7 +328,7 @@ lvgl:
                     entity_id: light.office_storage
 
         # Network Rack
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
