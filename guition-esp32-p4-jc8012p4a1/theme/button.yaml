@@ -1,28 +1,49 @@
 substitutions:
   icon_font: icon_font
-  button_on_color: "0xFF8C00"
-  button_text_color: "0xFFFFFF"
-  button_control_color: "0x313131"
-  button_height: 130px
-  button_width: 200px
-  padding: 14px
-  radius: 8px
+  button_accent_color: "0x00D4AA"      # Modern teal accent (change to 0x6366F1 for indigo)
+  button_text_color: "0xF9FAFB"        # Clean white
+  button_bg_color: "0x374151"          # Medium dark gray
+  button_pressed_color: "0x1F2937"     # Darker when pressed
+  button_height: 110px
+  button_width: 180px
+  padding: 16px
+  radius: 14px
 
 lvgl:
-  style_definitions:
-    - id: control
-      bg_color: $button_control_color
+  style:
+    control:
+      bg_color: $button_bg_color
+      shadow_width: 8
+      shadow_color: "0x000000"
+      shadow_offset_x: 0
+      shadow_offset_y: 4
+      shadow_opa: 40%
 
   theme:
     button:
-      text_font: label_font
+      text_font: $label_font
       scroll_on_focus: false
       radius: $radius
       width: $button_width
       height: $button_height
       pad_all: $padding
-      shadow_width: 0
       text_color: $button_text_color
+      bg_color: $button_bg_color
+      shadow_width: 6
+      shadow_color: "0x000000"
+      shadow_offset_x: 0
+      shadow_offset_y: 3
+      shadow_opa: 35%
+
+      # Modern pressed state
+      pressed:
+        bg_color: $button_pressed_color
+        shadow_width: 2
+        shadow_offset_y: 1
+
+      # Active/checked state
       checked:
-        bg_color: $button_on_color
-        text_color: $button_text_color
+        bg_color: $button_accent_color
+        text_color: "0xFFFFFF"
+        shadow_width: 8
+        shadow_opa: 50%
