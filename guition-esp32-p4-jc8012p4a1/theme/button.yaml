@@ -1,9 +1,9 @@
 substitutions:
   icon_font: icon_font
-  button_accent_color: "0x00D4AA"      # Modern teal accent (change to 0x6366F1 for indigo)
-  button_text_color: "0xF9FAFB"        # Clean white
-  button_bg_color: "0x374151"          # Medium dark gray
-  button_pressed_color: "0x1F2937"     # Darker when pressed
+  button_accent_color: "0x00D4AA"      # Modern teal
+  button_text_color: "0xF8FAFC"
+  button_bg_color: "0x374151"
+  button_pressed_color: "0x1F2937"
   button_height: 110px
   button_width: 180px
   padding: 16px
@@ -31,17 +31,14 @@ lvgl:
       bg_color: $button_bg_color
       shadow_width: 6
       shadow_color: "0x000000"
-      shadow_offset_x: 0
       shadow_offset_y: 3
       shadow_opa: 35%
 
-      # Modern pressed state
       pressed:
         bg_color: $button_pressed_color
         shadow_width: 2
         shadow_offset_y: 1
 
-      # Active/checked state
       checked:
         bg_color: $button_accent_color
         text_color: "0xFFFFFF"
