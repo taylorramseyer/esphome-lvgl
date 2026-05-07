@@ -1,0 +1,182 @@
+# ── Page 3: System ───────────────────────────────────────────────────────────
+# Displays device diagnostics pulled from sensors already defined in
+# addon/network.yaml (uptime_sensor, wifi_signal_db, ink_ha_connected).
+#
+# on_load populates the labels with the current sensor state via lambda so
+# values are always fresh when you switch to this page.  The on_value
+# handlers below keep them live while the page is active.
+# ─────────────────────────────────────────────────────────────────────────────
+
+lvgl:
+  pages:
+    - id: page_system
+      on_load:
+        # Mark tab 3 active
+        - lvgl.widget.update:
+            id: nav_btn_1
+            state:
+              checked: false
+        - lvgl.widget.update:
+            id: nav_btn_2
+            state:
+              checked: false
+        - lvgl.widget.update:
+            id: nav_btn_3
+            state:
+              checked: true
+        # Populate stat labels with current values
+        - lvgl.label.update:
+            id: sys_uptime_value
+            text: !lambda |-
+              static char buf[16];
+              snprintf(buf, sizeof(buf), "%.1fh", id(uptime_sensor).state);
+              return buf;
+        - lvgl.label.update:
+            id: sys_wifi_value
+            text: !lambda |-
+              static char buf[16];
+              snprintf(buf, sizeof(buf), "%ddB", (int)id(wifi_signal_db).state);
+              return buf;
+        - lvgl.label.update:
+            id: sys_ha_value
+            text: !lambda |-
+              return id(ink_ha_connected).state ? "Connected" : "Offline";
+
+      bg_color: Black
+      bg_opa: cover
+      pad_top: 42
+      pad_bottom: 58
+      pad_left: 20
+      pad_right: 20
+
+      widgets:
+
+        # ── Page title ────────────────────────────────────────────────────────
+        - label:
+            text: "System"
+            align: top_mid
+            x: 0
+            y: 52
+            text_font: label_font
+            text_color: 0x888888
+
+        # ── Stat card: Uptime ─────────────────────────────────────────────────
+        - obj:
+            align: top_left
+            x: 0
+            y: 90
+            width: 380
+            height: 130
+            bg_color: 0x1A1A1A
+            radius: 14
+            border_width: 0
+            pad_all: 16
+            widgets:
+              - label:
+                  text: "Uptime"
+                  align: top_left
+                  text_font: label_font
+                  text_color: 0x888888
+              - label:
+                  id: sys_uptime_value
+                  text: "—"
+                  align: bottom_left
+                  text_font: statistics_font
+                  text_color: 0xFFFFFF
+
+        # ── Stat card: WiFi Signal ────────────────────────────────────────────
+        - obj:
+            align: top_right
+            x: 0
+            y: 90
+            width: 380
+            height: 130
+            bg_color: 0x1A1A1A
+            radius: 14
+            border_width: 0
+            pad_all: 16
+            widgets:
+              - label:
+                  text: "WiFi Signal"
+                  align: top_left
+                  text_font: label_font
+                  text_color: 0x888888
+              - label:
+                  id: sys_wifi_value
+                  text: "—"
+                  align: bottom_left
+                  text_font: statistics_font
+                  text_color: 0xFFFFFF
+
+        # ── Stat card: HA Connection ──────────────────────────────────────────
+        - obj:
+            align: top_left
+            x: 0
+            y: 240
+            width: 380
+            height: 130
+            bg_color: 0x1A1A1A
+            radius: 14
+            border_width: 0
+            pad_all: 16
+            widgets:
+              - label:
+                  text: "Home Assistant"
+                  align: top_left
+                  text_font: label_font
+                  text_color: 0x888888
+              - label:
+                  id: sys_ha_value
+                  text: "—"
+                  align: bottom_left
+                  text_font: label_font
+                  text_color: 0xFFFFFF
+
+        # ── Add more stat cards here ──────────────────────────────────────────
+        # Follow the same obj pattern above.  Increment y by 150 per row.
+        # Available sensor IDs from addon/network.yaml:
+        #   uptime_sensor      (float, hours)
+        #   wifi_signal_db     (float, dBm)
+        #   ink_ha_connected   (bool)
+
+
+# ── Live sensor updates while page_system is visible ─────────────────────────
+# These mirror the on_value from sensors.yaml but target system page labels.
+# They fire regardless of which page is active; LVGL silently no-ops updates
+# to labels on non-visible pages so there is no performance cost.
+
+sensor:
+  - platform: copy
+    source_id: uptime_sensor
+    name: "Uptime (system page mirror)"
+    internal: true
+    on_value:
+      - lvgl.label.update:
+          id: sys_uptime_value
+          text: !lambda |-
+            static char buf[16];
+            snprintf(buf, sizeof(buf), "%.1fh", x);
+            return buf;
+
+  - platform: copy
+    source_id: wifi_signal_db
+    name: "WiFi dB (system page mirror)"
+    internal: true
+    on_value:
+      - lvgl.label.update:
+          id: sys_wifi_value
+          text: !lambda |-
+            static char buf[16];
+            snprintf(buf, sizeof(buf), "%ddB", (int)x);
+            return buf;
+
+binary_sensor:
+  - platform: template
+    id: sys_ha_mirror
+    internal: true
+    lambda: return id(ink_ha_connected).state;
+    on_state:
+      - lvgl.label.update:
+          id: sys_ha_value
+          text: !lambda |-
+            return x ? "Connected" : "Offline";
