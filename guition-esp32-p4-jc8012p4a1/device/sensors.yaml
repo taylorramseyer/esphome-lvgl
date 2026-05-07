@@ -1,6 +1,5 @@
 sensor:
-
-  # Header Outdoor Temperate
+  # Header Temperature (Indoor / Outdoor)
   - platform: homeassistant
     entity_id: sensor.house_avg
     id: house_temperature
@@ -8,18 +7,18 @@ sensor:
       - lvgl.label.update:
           id: temperatures
           text:
-            format: "%d° / %d°"
-            args: [ '(int)round(id(house_temperature).state)', '(int)round(x)' ]
+            format: "%0.1f°F / %0.1f°F"
+            args: [ 'id(house_temperature).state', 'id(outdoor_temperature).state' ]
 
   - platform: homeassistant
-    entity_id: ensor.forever_ct_weather_temperature
+    entity_id: sensor.forever_ct_weather_temperature
     id: outdoor_temperature
     on_value:
       - lvgl.label.update:
           id: temperatures
           text:
-            format: "%d° / %d°"
-            args: [ '(int)round(x)', '(int)round(id(outdoor_temperature).state)' ]
+            format: "%0.1f°F / %0.1f°F"
+            args: [ 'id(house_temperature).state', 'id(outdoor_temperature).state' ]
 
   # Office Blind Position
   - platform: homeassistant
