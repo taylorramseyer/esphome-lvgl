@@ -5,49 +5,76 @@ lvgl:
   displays: my_display
   touchscreens: my_touchscreen
 
+  # ============================================
+  # GLOBAL STYLES (New - Modern Look)
+  # ============================================
+  style:
+    # Modern top bar style
+    top_bar:
+      bg_color: "0x1E293B"          # Slightly lighter than background
+      bg_opa: cover
+      shadow_width: 4
+      shadow_color: "0x000000"
+      shadow_offset_y: 2
+      shadow_opa: 30%
+
+    # Refined label styles
+    label_primary:
+      text_color: "0xF8FAFC"        # Clean bright white
+      text_font: clockbar_font
+
+    label_secondary:
+      text_color: "0x94A3B8"        # Muted gray for secondary info
+
+  # ============================================
+  # TOP STATUS BAR (Temperature + Clock)
+  # ============================================
   top_layer:
+    styles: top_bar
+    pad_all: 8
+    height: 42
+
     widgets:
-    
-      # Temperature
+      # Temperature (Left)
       - label:
           text: "-° / -°"
           id: temperatures
-          text_font: clockbar_font
+          styles: label_primary
           align: top_left
-          x: 8
-          y: 8
-          text_color: 0xFFFFFF
+          x: 12
+          y: 6
 
-      # Clock
+      # Clock (Center)
       - label:
           text: "--:--"
           id: display_time
-          text_font: clockbar_font
+          styles: label_primary
           align: top_mid
           x: 0
-          y: 8
+          y: 6
           text_align: center
-          text_color: 0xFFFFFF
 
+  # ============================================
+  # MAIN PAGE
+  # ============================================
   pages:
     - id: main_page
-      layout: 
+      layout:
         type: flex
         flex_flow: column_wrap
-        pad_row: 10
-        pad_column: 10
+        pad_row: 12
+        pad_column: 12
       width: 100%
-      bg_color: Black
+      bg_color: "0x0F172A"          # Rich dark slate (modern dark mode)
       bg_opa: cover
-      pad_top: 42
-      pad_bottom: 5
-      pad_left: 5
-      pad_right: 5
-      
+      pad_top: 52                   # Space for top bar
+      pad_bottom: 12
+      pad_left: 12
+      pad_right: 12
+
       widgets:
-      
         # Office Features Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -57,7 +84,7 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: scene_features_icon                
+                  id: scene_features_icon
                   text: $ledstrip
               - label:
                   align: bottom_left
@@ -70,7 +97,7 @@ lvgl:
                     entity_id: switch.office_features_stateful_scene
 
         # Office Calls Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -80,7 +107,7 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_scene_calls_icon                
+                  id: office_scene_calls_icon
                   text: $videocall
               - label:
                   align: bottom_left
@@ -93,7 +120,7 @@ lvgl:
                     entity_id: switch.office_calls_stateful_scene
 
         # Office Evening Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -103,7 +130,7 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_scene_evening_icon                
+                  id: office_scene_evening_icon
                   text: $nightlight
               - label:
                   align: bottom_left
@@ -116,7 +143,7 @@ lvgl:
                     entity_id: switch.office_evening_stateful_scene
 
         # Office Dimmed Scene
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -126,7 +153,7 @@ lvgl:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_scene_dimmed_icon                
+                  id: office_scene_dimmed_icon
                   text: $nightlight
               - label:
                   align: bottom_left
@@ -139,7 +166,7 @@ lvgl:
                     entity_id: switch.office_dimmed_stateful_scene
 
         # Office Blind 100%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -161,7 +188,7 @@ lvgl:
                     position: "100"
 
         # Office Blind 66%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -183,7 +210,7 @@ lvgl:
                     position: "66"
 
         # Office Blind 33%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -205,7 +232,7 @@ lvgl:
                     position: "33"
 
         # Office Blind 0%
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -227,7 +254,7 @@ lvgl:
                     position: "0"
 
         # Storage Lights
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
@@ -250,7 +277,7 @@ lvgl:
                     entity_id: light.office_storage
 
         # Network Rack
-        - button: 
+        - button:
             height: $button_height
             width: $button_width
             checkable: true
