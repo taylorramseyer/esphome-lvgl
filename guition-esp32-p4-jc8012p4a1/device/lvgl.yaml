@@ -5,18 +5,13 @@ lvgl:
   displays: my_display
   touchscreens: my_touchscreen
 
-  styles:
-    # Modern top status bar
-    top_bar:
-      bg_color: "0x1E293B"
-      bg_opa: cover
-      shadow_width: 4
-      shadow_color: "0x000000"
-      shadow_offset_y: 2
-      shadow_opa: 30%
-
   top_layer:
-    styles: top_bar
+    bg_color: "0x1E293B"
+    bg_opa: cover
+    shadow_width: 4
+    shadow_color: "0x000000"
+    shadow_offset_y: 2
+    shadow_opa: 30%
     pad_all: 8
     height: 42
 
