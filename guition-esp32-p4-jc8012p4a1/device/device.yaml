@@ -110,5 +110,5 @@ display:
     auto_clear_enabled: false
     color_order: RGB
     dimensions:
-      width: 800
-      height: 1280
+      width: 1280
+      height: 800
