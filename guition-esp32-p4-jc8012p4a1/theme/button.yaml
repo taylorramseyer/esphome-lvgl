@@ -10,7 +10,7 @@ substitutions:
   radius: 14px
 
 lvgl:
-  style:
+  styles:
     control:
       bg_color: $button_bg_color
       shadow_width: 8
