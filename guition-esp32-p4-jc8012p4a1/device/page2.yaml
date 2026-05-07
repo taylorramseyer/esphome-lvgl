@@ -1,0 +1,86 @@
+# ── Page 2: Climate ──────────────────────────────────────────────────────────
+# Add your climate/HVAC buttons here following the same button pattern as
+# lvgl.yaml.  Wire state back via binary_sensor / sensor entries below.
+#
+# This file is included by package.yaml and merges into the top-level lvgl:
+# config automatically, so pages defined here appear alongside main_page.
+# ─────────────────────────────────────────────────────────────────────────────
+
+lvgl:
+  pages:
+    - id: page_climate
+      on_load:
+        - lvgl.widget.update:
+            id: nav_btn_1
+            state:
+              checked: false
+        - lvgl.widget.update:
+            id: nav_btn_2
+            state:
+              checked: true
+        - lvgl.widget.update:
+            id: nav_btn_3
+            state:
+              checked: false
+      layout:
+        type: flex
+        flex_flow: column_wrap
+        pad_row: 10
+        pad_column: 10
+      width: 100%
+      bg_color: Black
+      bg_opa: cover
+      pad_top: 42
+      pad_bottom: 58
+      pad_left: 5
+      pad_right: 5
+
+      widgets:
+
+        # ── Example: Thermostat On/Off ────────────────────────────────────────
+        # Uncomment and update entity_id to use.
+        #
+        # - button:
+        #     height: $button_height
+        #     width: $button_width
+        #     checkable: true
+        #     id: climate_hvac_button
+        #     styles: control
+        #     widgets:
+        #       - label:
+        #           text_font: $icon_font
+        #           align: top_left
+        #           text: $aircon
+        #       - label:
+        #           align: bottom_left
+        #           text: "HVAC"
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: climate.toggle
+        #           data:
+        #             entity_id: climate.office_hvac
+
+        # ── Placeholder shown until buttons are wired up ──────────────────────
+        - label:
+            id: climate_placeholder
+            text: "Add climate buttons above"
+            align: center
+            text_color: 0x555555
+            text_font: label_font
+
+
+# ── Sensor state → button state wiring ───────────────────────────────────────
+# Add binary_sensor / sensor entries here to keep them co-located with this
+# page.  Example (mirrors the pattern in device/sensors.yaml):
+#
+# binary_sensor:
+#   - platform: homeassistant
+#     id: climate_hvac_state
+#     entity_id: climate.office_hvac
+#     trigger_on_initial_state: true
+#     on_state:
+#       then:
+#         lvgl.widget.update:
+#           id: climate_hvac_button
+#           state:
+#             checked: !lambda return x;
