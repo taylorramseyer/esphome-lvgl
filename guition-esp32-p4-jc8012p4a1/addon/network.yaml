@@ -7,12 +7,15 @@ binary_sensor:
 
 
 sensor:
-# Uptime
+  # Uptime (shown in hours with 1 decimal)
   - platform: uptime
     name: "Uptime Sensor"
     id: uptime_sensor
     entity_category: diagnostic
-    internal: true
+    unit_of_measurement: "h"
+    accuracy_decimals: 1
+    filters:
+      - lambda: return x / 3600.0;   # Convert seconds → hours
 
 # Wifi Signal Strength
   - platform: wifi_signal
@@ -20,7 +23,6 @@ sensor:
     id: wifi_signal_db
     update_interval: 60s
     entity_category: "diagnostic"
-    internal: true
 
 # Wifi Signal Strength
   - platform: copy
