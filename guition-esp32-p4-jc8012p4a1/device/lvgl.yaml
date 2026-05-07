@@ -45,7 +45,27 @@ lvgl:
       pad_right: 5
       
       widgets:
-      
+        
+        # Graphs Button
+        - button:
+            height: $button_height
+            width: $button_width
+            checkable: false
+            styles: control
+            widgets:
+              - label:
+                  text_font: $icon_font
+                  align: top_left
+                  id: scene_features_icon                
+                  text: $ledstrip
+              - label:
+                  align: bottom_left
+                  text: "Graphs"
+            on_click:
+              - lvgl.page.show:
+                  id: graphs_page
+
+        
         # Office Features Scene
         - button: 
             height: $button_height
@@ -271,3 +291,56 @@ lvgl:
                   service: light.toggle
                   data:
                     entity_id: light.office_network_rack
+    
+    
+    # GRAPHS PAGE - Temperature History
+    - id: graphs_page
+      bg_color: "0x0F172A"
+      bg_opa: cover
+      pad_all: 12
+
+      widgets:
+        # Title
+        - label:
+            text: "Temperature History"
+            text_font: label_font
+            text_color: "0xF8FAFC"
+            align: top_mid
+            y: 8
+
+        # Temperature Chart
+        - chart:
+            id: temp_chart
+            width: 100%
+            height: 280px
+            type: line
+            point_count: 24
+            update_mode: shift
+            series:
+              - color: "0x00D4AA"      # Teal = Indoor
+                id: indoor_series
+              - color: "0xF59E0B"      # Orange = Outdoor
+                id: outdoor_series
+            x_axis:
+              major_tick_count: 6
+              label_count: 6
+            y_axis:
+              major_tick_count: 5
+              range:
+                min: 50
+                max: 90
+
+        # Back Button
+        - button:
+            height: 60px
+            width: 180px
+            styles: control
+            align: bottom_mid
+            y: -10
+            widgets:
+              - label:
+                  text: "Back"
+                  text_font: label_font
+            on_click:
+              - lvgl.page.show:
+                  id: main_page
