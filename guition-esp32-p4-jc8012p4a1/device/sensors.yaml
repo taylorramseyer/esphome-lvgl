@@ -1,6 +1,6 @@
 sensor:
   # Header Temperature (Indoor / Outdoor)
-  - platform: homeassistant
+- platform: homeassistant
     entity_id: sensor.house_avg
     id: house_temperature
     on_value:
@@ -9,6 +9,9 @@ sensor:
           text:
             format: "%0.1f°F / %0.1f°F"
             args: [ 'id(house_temperature).state', 'id(outdoor_temperature).state' ]
+      - lvgl.chart.add_point:
+          id: indoor_series
+          x: !lambda 'return id(house_temperature).state;'
 
   - platform: homeassistant
     entity_id: sensor.forever_ct_weather_temperature
@@ -19,6 +22,9 @@ sensor:
           text:
             format: "%0.1f°F / %0.1f°F"
             args: [ 'id(house_temperature).state', 'id(outdoor_temperature).state' ]
+      - lvgl.chart.add_point:
+          id: outdoor_series
+          x: !lambda 'return id(outdoor_temperature).state;'
 
   # Office Blind Position
   - platform: homeassistant
