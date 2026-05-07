@@ -1,6 +1,6 @@
 sensor:
   # Header Temperature (Indoor / Outdoor)
-- platform: homeassistant
+  - platform: homeassistant
     entity_id: sensor.house_avg
     id: house_temperature
     on_value:
