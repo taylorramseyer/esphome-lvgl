@@ -1,10 +1,13 @@
 packages:
-  device: !include device/device.yaml
+  device:  !include device/device.yaml
   sensors: !include device/sensors.yaml
-  lvgl: !include device/lvgl.yaml
-  time: !include addon/time.yaml
+  lvgl:    !include device/lvgl.yaml
+  page2:   !include device/page2.yaml   # ← Climate page
+  page3:   !include device/page3.yaml   # ← System page
+  time:    !include addon/time.yaml
   backlight: !include addon/backlight.yaml
   network: !include addon/network.yaml
-  fonts: !include assets/fonts.yaml
-  icons: !include assets/icons.yaml
-  button: !include theme/button.yaml
+  fonts:   !include assets/fonts.yaml
+  icons:   !include assets/icons.yaml
+  button:  !include theme/button.yaml
+  
