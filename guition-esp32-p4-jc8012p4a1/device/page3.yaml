@@ -40,7 +40,7 @@ lvgl:
         - lvgl.label.update:
             id: sys_ha_value
             text: !lambda |-
-              return id(ink_ha_connected).state ? "Connected" : "Offline";
+              return std::string(id(ink_ha_connected).state ? "Connected" : "Offline");
 
       bg_color: Black
       bg_opa: cover
@@ -179,4 +179,4 @@ binary_sensor:
       - lvgl.label.update:
           id: sys_ha_value
           text: !lambda |-
-            return x ? "Connected" : "Offline";
+            return std::string(x ? "Connected" : "Offline");
