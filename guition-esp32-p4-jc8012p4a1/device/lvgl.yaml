@@ -6,28 +6,25 @@ lvgl:
   touchscreens: my_touchscreen
 
   # ============================================
-  # GLOBAL STYLES (New - Modern Look)
+  # GLOBAL STYLES (Modern Look)
   # ============================================
-  style:
-    # Modern top bar style
+  styles:
+    # Top status bar
     top_bar:
-      bg_color: "0x1E293B"          # Slightly lighter than background
+      bg_color: "0x1E293B"
       bg_opa: cover
       shadow_width: 4
       shadow_color: "0x000000"
       shadow_offset_y: 2
       shadow_opa: 30%
 
-    # Refined label styles
+    # Primary labels (temperature + clock)
     label_primary:
-      text_color: "0xF8FAFC"        # Clean bright white
+      text_color: "0xF8FAFC"
       text_font: clockbar_font
 
-    label_secondary:
-      text_color: "0x94A3B8"        # Muted gray for secondary info
-
   # ============================================
-  # TOP STATUS BAR (Temperature + Clock)
+  # TOP STATUS BAR
   # ============================================
   top_layer:
     styles: top_bar
@@ -35,7 +32,7 @@ lvgl:
     height: 42
 
     widgets:
-      # Temperature (Left)
+      # Temperature
       - label:
           text: "-° / -°"
           id: temperatures
@@ -44,7 +41,7 @@ lvgl:
           x: 12
           y: 6
 
-      # Clock (Center)
+      # Clock
       - label:
           text: "--:--"
           id: display_time
@@ -65,15 +62,15 @@ lvgl:
         pad_row: 12
         pad_column: 12
       width: 100%
-      bg_color: "0x0F172A"          # Rich dark slate (modern dark mode)
+      bg_color: "0x0F172A"
       bg_opa: cover
-      pad_top: 52                   # Space for top bar
+      pad_top: 52
       pad_bottom: 12
       pad_left: 12
       pad_right: 12
 
       widgets:
-        # Office Features Scene
+        # === Your existing buttons (unchanged) ===
         - button:
             height: $button_height
             width: $button_width
@@ -96,7 +93,6 @@ lvgl:
                   data:
                     entity_id: switch.office_features_stateful_scene
 
-        # Office Calls Scene
         - button:
             height: $button_height
             width: $button_width
@@ -119,7 +115,6 @@ lvgl:
                   data:
                     entity_id: switch.office_calls_stateful_scene
 
-        # Office Evening Scene
         - button:
             height: $button_height
             width: $button_width
@@ -142,7 +137,6 @@ lvgl:
                   data:
                     entity_id: switch.office_evening_stateful_scene
 
-        # Office Dimmed Scene
         - button:
             height: $button_height
             width: $button_width
@@ -165,7 +159,6 @@ lvgl:
                   data:
                     entity_id: switch.office_dimmed_stateful_scene
 
-        # Office Blind 100%
         - button:
             height: $button_height
             width: $button_width
@@ -187,7 +180,6 @@ lvgl:
                     entity_id: cover.office_blind
                     position: "100"
 
-        # Office Blind 66%
         - button:
             height: $button_height
             width: $button_width
@@ -209,7 +201,6 @@ lvgl:
                     entity_id: cover.office_blind
                     position: "66"
 
-        # Office Blind 33%
         - button:
             height: $button_height
             width: $button_width
@@ -231,7 +222,6 @@ lvgl:
                     entity_id: cover.office_blind
                     position: "33"
 
-        # Office Blind 0%
         - button:
             height: $button_height
             width: $button_width
@@ -253,7 +243,6 @@ lvgl:
                     entity_id: cover.office_blind
                     position: "0"
 
-        # Storage Lights
         - button:
             height: $button_height
             width: $button_width
@@ -276,7 +265,6 @@ lvgl:
                   data:
                     entity_id: light.office_storage
 
-        # Network Rack
         - button:
             height: $button_height
             width: $button_width
