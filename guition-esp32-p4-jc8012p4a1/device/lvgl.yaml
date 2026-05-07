@@ -293,14 +293,15 @@ lvgl:
                     entity_id: light.office_network_rack
     
     
-    # GRAPHS PAGE - Temperature History
+    # ============================================
+    # GRAPHS PAGE (Second Page)
+    # ============================================
     - id: graphs_page
       bg_color: "0x0F172A"
       bg_opa: cover
       pad_all: 12
 
       widgets:
-        # Title
         - label:
             text: "Temperature History"
             text_font: label_font
@@ -308,7 +309,6 @@ lvgl:
             align: top_mid
             y: 8
 
-        # Temperature Chart
         - chart:
             id: temp_chart
             width: 100%
@@ -317,9 +317,9 @@ lvgl:
             point_count: 24
             update_mode: shift
             series:
-              - color: "0x00D4AA"      # Teal = Indoor
+              - color: "0x00D4AA"
                 id: indoor_series
-              - color: "0xF59E0B"      # Orange = Outdoor
+              - color: "0xF59E0B"
                 id: outdoor_series
             x_axis:
               major_tick_count: 6
@@ -330,7 +330,6 @@ lvgl:
                 min: 50
                 max: 90
 
-        # Back Button
         - button:
             height: 60px
             width: 180px
