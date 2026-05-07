@@ -89,7 +89,7 @@ touchscreen:
     interrupt_pin: GPIO21
     transform:
       swap_xy: false
-      mirror_x: false
+      mirror_x: true
       mirror_y: false
     on_release:
       then:
